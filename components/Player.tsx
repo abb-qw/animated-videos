@@ -74,8 +74,15 @@ export const Player: React.FC<PlayerProps> = ({ scenes, characters, onBack }) =>
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           const textHeight = 100;
           const yPos = h - textHeight - 40;
-          ctx.roundRect(w * 0.1, yPos, w * 0.8, textHeight, 15);
-          ctx.fill();
+          
+          if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(w * 0.1, yPos, w * 0.8, textHeight, 15);
+            ctx.fill();
+          } else {
+             // Fallback for browsers without roundRect
+             ctx.fillRect(w * 0.1, yPos, w * 0.8, textHeight);
+          }
           
           // Character Name
           const charName = activeChar?.name || 'Unknown';
